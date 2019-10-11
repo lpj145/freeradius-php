@@ -1,0 +1,25 @@
+{
+    "name": "marcosadantas/freeradius-php",
+    "description": "This a lib to provide some tools to management a freeradius database.",
+    "type": "library",
+    "require": {
+        "cakephp/orm": "dev-master",
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "cakephp/orm": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marcos Dantas",
+            "email": "marcos.adantas@hotmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "FreeradiusPhp\\": "."
+        }
+    }
+}
