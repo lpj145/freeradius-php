@@ -5,6 +5,20 @@
       <sourceFolder url="file://$MODULE_DIR$/vendor/cakephp" isTestSource="false" packagePrefix="Cake" />
       <sourceFolder url="file://$MODULE_DIR$/vendor/psr/log" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" packagePrefix="Freeradius\" generated="true" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/collection" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/core" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/database" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/datasource" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/event" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/log" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/orm" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/utility" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cakephp/validation" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/psr/simple-cache" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

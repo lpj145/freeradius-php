@@ -40,6 +40,8 @@ class RadiusUser implements RadiusUserInterface
     private $downloadSpeed;
 
     private $uploadSpeed;
+
+    private $attributes = [];
     /**
      * @var array
      */
@@ -125,6 +127,13 @@ class RadiusUser implements RadiusUserInterface
         return $this;
     }
 
+    public function setCustomAttribute(string $attributeName, $value): RadiusUserInterface
+    {
+        $this->attributes[$attributeName] = $value;
+        return $this;
+    }
+
+
     /**
      * @return string
      */
@@ -182,6 +191,14 @@ class RadiusUser implements RadiusUserInterface
     }
 
     /**
+     * @return array
+     */
+    public function getCustomAttributes(): array
+    {
+        return $this->attributes;
+    }
+
+    /**
      * @return bool
      */
     public function isPPP(): bool
@@ -195,6 +212,14 @@ class RadiusUser implements RadiusUserInterface
     public function hasLockedToAp(): bool
     {
         return is_null($this->idAccessPoint);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCustomAttributes(): bool
+    {
+        return count($this->attributes) > 0;
     }
 
     /**

@@ -42,6 +42,12 @@ interface RadiusUserInterface
      */
     public function setUploadSpeed(int $megabytes): RadiusUserInterface;
 
+    /**
+     * @param string $attributeName
+     * @param $value
+     * @return RadiusUserInterface
+     */
+    public function setCustomAttribute(string $attributeName, $value): RadiusUserInterface;
 
     public function getLogin(): string;
 
@@ -57,9 +63,13 @@ interface RadiusUserInterface
 
     public function getUploadSpeed(): int;
 
+    public function getCustomAttributes(): array;
+
     public function isPPP(): bool;
 
     public function hasLockedToAp(): bool;
+
+    public function hasCustomAttributes(): bool;
 
     /**
      * Is a errors occur's when db drive tried validation and add record to database.

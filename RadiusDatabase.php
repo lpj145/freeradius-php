@@ -13,6 +13,7 @@ namespace Freeradiusphp;
 
 use Freeradius\Driver\CakeOrm;
 use Freeradius\Driver\Debug;
+use Freeradius\Validate;
 
 class RadiusDatabase
 {
@@ -20,32 +21,47 @@ class RadiusDatabase
      * @var null|object|string
      */
     private $databaseDriver;
+    /**
+     * @var Validate
+     */
+    private $validate;
 
     private $config = [
-        'model' => [
-            'login' => [
-                'validations' => [
-                    'minLength' => 5,
+        'validations' => [
+            'Login' => [
+                'minLenght' => [
+                    'arg' => 5,
                     'message' => 'Radius login need be a string or length great than %d'
                 ]
             ],
-            'password' => [
-                'validations' => [
-                    'minLength' => 5,
+            'Password' => [
+                ['minLength' => [
+                    'arg' => 5,
                     'message' => 'Radius password need be a string or length great than %d'
+                ]]
+            ],
+            'MacAddress' => [
+                'macAddress' => [
+                    'message' => [
+                        'Radius password need be a string or length great than %d'
+                    ]
                 ]
             ],
-            'mac' => [
-                'filters' => [
-                    'macAddress',
-                ]
+            'IpAddress' => [
+                'ipAddress'
             ]
+        ],
+        'model' => [
+
         ]
     ];
 
     public function __construct($databaseDriver = null, array $options = [])
     {
         $this->defineDatabaseDriver($databaseDriver);
+        $this->validate = new Validate();
+
+        $this->config = array_merge($this->config, $options);
     }
 
     public function add(RadiusUserInterface $radiusUser): bool
@@ -70,14 +86,21 @@ class RadiusDatabase
      */
     protected function validateUserAttributes(RadiusUserInterface $radiusUser): bool
     {
+        $validationsOptions = $this->config['validations'];
 
+        foreach ($validationsOptions as $optionName => $option) {
+            $funcName = 'get'.$optionName;
+
+
+        }
+        $this->validate->minLength($this->config['login']['validation'])
     }
 
     /**
      * @param $databaseDriver
      * @throws \ErrorException
      */
-    protected function defineDatabaseDriver($databaseDriver) {
+    protected function defineDatabaseDriver($databaseDriver): void {
         if (is_string($databaseDriver) || is_null($databaseDriver)) {
             $this->databaseDriver = new Debug();
             return;
