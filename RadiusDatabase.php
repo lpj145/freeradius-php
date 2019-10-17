@@ -11,9 +11,9 @@
 namespace Freeradiusphp;
 
 
-use Freeradius\Driver\CakeOrm;
-use Freeradius\Driver\Debug;
-use Freeradius\Validate;
+use Freeradiusphp\Driver\CakeOrm;
+use Freeradiusphp\Driver\Debug;
+use Freeradiusphp\Validate;
 
 class RadiusDatabase
 {
@@ -21,36 +21,8 @@ class RadiusDatabase
      * @var null|object|string
      */
     private $databaseDriver;
-    /**
-     * @var Validate
-     */
-    private $validate;
 
     private $config = [
-        'validations' => [
-            'Login' => [
-                'minLenght' => [
-                    'arg' => 5,
-                    'message' => 'Radius login need be a string or length great than %d'
-                ]
-            ],
-            'Password' => [
-                ['minLength' => [
-                    'arg' => 5,
-                    'message' => 'Radius password need be a string or length great than %d'
-                ]]
-            ],
-            'MacAddress' => [
-                'macAddress' => [
-                    'message' => [
-                        'Radius password need be a string or length great than %d'
-                    ]
-                ]
-            ],
-            'IpAddress' => [
-                'ipAddress'
-            ]
-        ],
         'model' => [
 
         ]
@@ -59,14 +31,18 @@ class RadiusDatabase
     public function __construct($databaseDriver = null, array $options = [])
     {
         $this->defineDatabaseDriver($databaseDriver);
-        $this->validate = new Validate();
 
         $this->config = array_merge($this->config, $options);
     }
 
     public function add(RadiusUserInterface $radiusUser): bool
     {
-        $this->validateUserAttributes($radiusUser);
+        $validate = RadiusUserValidation::factory();
+        if (!$radiusUser->isValid() && !$validate->validateUser($radiusUser)) {
+            return false;
+        }
+
+        return true;
     }
 
     public function remove(RadiusUserInterface $radiusUser): bool
@@ -83,17 +59,11 @@ class RadiusDatabase
      * Validate: mac, ip, login length, password length
      * @param RadiusUserInterface $radiusUser
      * @return bool
+     * @throws \ErrorException
      */
     protected function validateUserAttributes(RadiusUserInterface $radiusUser): bool
     {
-        $validationsOptions = $this->config['validations'];
 
-        foreach ($validationsOptions as $optionName => $option) {
-            $funcName = 'get'.$optionName;
-
-
-        }
-        $this->validate->minLength($this->config['login']['validation'])
     }
 
     /**
@@ -106,8 +76,10 @@ class RadiusDatabase
             return;
         }
 
-        switch ($databaseDriver) {
-            case '\\Cake\\Database\\Connection':
+        $driverName = get_class($databaseDriver);
+
+        switch ($driverName) {
+            case 'Cake\\Database\\Connection':
                 $databaseDriver = new CakeOrm($databaseDriver);
                 break;
             default:

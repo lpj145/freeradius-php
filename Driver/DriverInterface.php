@@ -8,7 +8,7 @@
  * licensed under MIT
  */
 
-namespace Freeradius\Driver;
+namespace Freeradiusphp\Driver;
 
 
 use Freeradiusphp\RadiusUserInterface;

@@ -6,7 +6,7 @@
  * Time: 15:47
  */
 
-namespace Freeradius\Driver;
+namespace Freeradiusphp\Driver;
 
 
 use Cake\Database\Connection;

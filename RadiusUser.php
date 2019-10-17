@@ -47,6 +47,8 @@ class RadiusUser implements RadiusUserInterface
      */
     private $errors = [];
 
+    private $valid = false;
+
     /**
      * @param bool $active
      * @return RadiusUserInterface
@@ -226,7 +228,7 @@ class RadiusUser implements RadiusUserInterface
      * @param array $errors
      * @return RadiusUser
      */
-    public function setErrors(array $errors): RadiusUser
+    public function setErrors(array $errors): RadiusUserInterface
     {
         $this->errors = $errors;
         return $this;
@@ -246,5 +248,16 @@ class RadiusUser implements RadiusUserInterface
     public function getErrors(): array
     {
         return $this->errors;
+    }
+
+    public function isValid(): bool
+    {
+        return $this->valid;
+    }
+
+    public function setValid(): RadiusUserInterface
+    {
+        $this->valid = true;
+        return $this;
     }
 }

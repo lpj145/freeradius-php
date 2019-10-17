@@ -79,9 +79,13 @@ interface RadiusUserInterface
      * @param array $errors
      * @return RadiusUser
      */
-    public function setErrors(array $errors): RadiusUser;
+    public function setErrors(array $errors): RadiusUserInterface;
 
     public function hasErrors(): bool;
 
     public function getErrors(): array;
+
+    public function isValid(): bool;
+
+    public function setValid(): RadiusUserInterface;
 }
