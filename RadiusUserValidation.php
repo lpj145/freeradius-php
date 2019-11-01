@@ -38,12 +38,22 @@ class RadiusUserValidation
         ],
         'MacAddress' => [
             'filterByMac' => [
-                'message' => 'Radius mac not have a value.'
+                'message' => 'Radius mac: %s not have valid value.',
+                'withValue' => true
             ]
         ],
-        'IpAddress' => [
-            'filterByIp' => [
-                'message' => 'Ip address is not have a value.'
+        'Ipv4Address' => [
+            'filterByIpv4' => [
+                'message' => 'Ip address: %s is not valid ivp4',
+                'withValue' => true,
+                'optional' => true
+            ]
+        ],
+        'Ipv6Address' => [
+            'filterByIpv6' => [
+                'message' => 'Ip address: %s is not a valid ipv6',
+                'withValue' => true,
+                'optional' => true
             ]
         ]
     ];
@@ -117,9 +127,14 @@ class RadiusUserValidation
      * @param string $ipAddress
      * @return bool
      */
-    public function filterByIp(string $ipAddress): bool
+    public function filterByIpv4(string $ipAddress): bool
     {
-        return (bool)filter_var($ipAddress, FILTER_VALIDATE_MAC);
+        return (bool)filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
+    }
+
+    public function filterByIpv6(string $ipAddress): bool
+    {
+        return (bool)filter_var($ipAddress, FILTER_VALIDATE_IP,FILTER_FLAG_IPV6);
     }
 
     /**
@@ -164,9 +179,21 @@ class RadiusUserValidation
     protected function eachValidationsFromAttribute(array $validationsFunctions, $value)
     {
         foreach ($validationsFunctions as $validationName => $validationsConfig) {
+
+            $isOptional = $validationsConfig['optional'] ?? false;
+
+            if ($isOptional && empty($value)) {
+                continue;
+            }
+
             if (
                 !$this->executeValidation($validationName, $value, $validationsConfig['arg'] ?? null)
             ) {
+
+                if ($validationsConfig['withValue'] ?? false) {
+                    $validationsConfig['arg'] = $value;
+                }
+
                 return sprintf($validationsConfig['message'], $validationsConfig['arg'] ?? '');
             }
         }

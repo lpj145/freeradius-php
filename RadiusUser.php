@@ -33,6 +33,11 @@ class RadiusUser implements RadiusUserInterface
      */
     private $ipAddress = '';
     /**
+     * @var string
+     */
+    private $ipv6 = '';
+
+    /**
      * @var integer
      */
     private $idAccessPoint;
@@ -93,9 +98,15 @@ class RadiusUser implements RadiusUserInterface
      * @param string $ip
      * @return RadiusUserInterface
      */
-    public function setIpAddress(string $ip): RadiusUserInterface
+    public function setIpv4Address(string $ip): RadiusUserInterface
     {
         $this->ipAddress = $ip;
+        return $this;
+    }
+
+    public function setIpv6Address(string $ipv6): RadiusUserInterface
+    {
+        $this->ipv6 = $ipv6;
         return $this;
     }
 
@@ -171,9 +182,17 @@ class RadiusUser implements RadiusUserInterface
     /**
      * @return string
      */
-    public function getIpAddress(): string
+    public function getIpv4Address(): string
     {
         return $this->ipAddress;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIpv6Address(): string
+    {
+        return $this->ipv6;
     }
 
     /**

@@ -26,7 +26,9 @@ interface RadiusUserInterface
 
     public function setMacAddress(string $mac): RadiusUserInterface;
 
-    public function setIpAddress(string $ip): RadiusUserInterface;
+    public function setIpv4Address(string $ipv4): RadiusUserInterface;
+
+    public function setIpv6Address(string $ipv6): RadiusUserInterface;
 
     public function setLockedToAp(int $idAp): RadiusUserInterface;
 
@@ -57,7 +59,9 @@ interface RadiusUserInterface
 
     public function getLockedAp(): string;
 
-    public function getIpAddress(): string;
+    public function getIpv4Address(): string;
+
+    public function getIpv6Address(): string;
 
     public function getDownloadSpeed(): int;
 
